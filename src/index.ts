@@ -392,20 +392,173 @@ main.innerHTML+=\`<div class="page active" id="page-home" data-accent="blue">
 main.innerHTML+=\`<div class="page" id="page-market" data-accent="orange">
 \${hdr('🌍 Market & Competitors','Marktüberblick ohne eigene Recherche. Alles was du wissen musst, auf einen Blick.','orange')}
 
+<!-- Mode Toggle -->
+<div style="display:flex;gap:8px;margin-bottom:20px">
+<button id="mkt-mode-a2g" onclick="document.getElementById('mkt-a2g').style.display='block';document.getElementById('mkt-custom').style.display='none';this.style.background='#f97316';this.style.color='#fff';document.getElementById('mkt-mode-custom').style.background='transparent';document.getElementById('mkt-mode-custom').style.color='#f97316'" class="btn" style="background:#f97316;color:#fff;border:1px solid #f97316;border-radius:8px;padding:8px 16px;cursor:pointer;font-size:13px">Agents2Go</button>
+<button id="mkt-mode-custom" onclick="document.getElementById('mkt-custom').style.display='block';document.getElementById('mkt-a2g').style.display='none';this.style.background='#f97316';this.style.color='#fff';document.getElementById('mkt-mode-a2g').style.background='transparent';document.getElementById('mkt-mode-a2g').style.color='#f97316'" class="btn" style="background:transparent;color:#f97316;border:1px solid #f97316;border-radius:8px;padding:8px 16px;cursor:pointer;font-size:13px">Anderes Unternehmen analysieren</button>
+</div>
+
+<!-- Custom analysis placeholder -->
+<div id="mkt-custom" style="display:none">
+<div class="card" style="border-left:3px solid #f97316">
+<h3 style="margin-bottom:12px">🔍 Wettbewerber-Analyse für ein anderes Unternehmen</h3>
+<p style="margin-bottom:12px;color:#888">Gib die Website-URL deines Unternehmens ein. Claudia analysiert automatisch Markt, Wettbewerber und Positionierung.</p>
+<div style="display:flex;gap:8px">
+<input type="text" placeholder="https://example.com" style="flex:1;padding:10px 14px;border:1px solid #333;border-radius:8px;background:#1a1a2e;color:#fff;font-size:14px">
+<button class="btn" style="background:#f97316;color:#fff;border:none;border-radius:8px;padding:10px 20px;cursor:pointer;white-space:nowrap">🚀 Analyse starten</button>
+</div>
+<p style="font-size:11px;color:#666;margin-top:8px"><em>Coming soon – diese Funktion wird in Kürze verfügbar sein.</em></p>
+</div>
+</div>
+
+<!-- Agents2Go pre-built analysis -->
+<div id="mkt-a2g">
+
 <div class="section-title"><div class="dot" style="background:#f97316"></div> Competitor Feed</div>
-<div class="card"><p>Echtzeit-Updates zu Preisänderungen, Landing Pages, Ads, Messaging und Produktänderungen der Wettbewerber. <em>Daten werden automatisch gesammelt.</em></p></div>
-\${[['C','#f97316','Competitor Alpha','Preis gesenkt um 15% · vor 2 Stunden'],['B','#3b82f6','Competitor Beta','Neue Landing Page live · vor 5 Stunden'],['G','#22c55e','Competitor Gamma','Google Ads Kampagne gestartet · vor 1 Tag']].map(c=>\`<div class="competitor"><div class="avatar" style="background:\${c[1]}">\${c[0]}</div><div class="info"><h4>\${c[2]}</h4><p>\${c[3]}</p></div></div>\`).join('')}
+<div class="card" style="padding:0;overflow:hidden">
+<div style="padding:14px 18px;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;gap:12px">
+<div style="width:8px;height:8px;border-radius:50%;background:#ef4444;flex-shrink:0"></div>
+<div><strong style="color:#f97316">Jasper AI</strong> veröffentlicht "State of AI in Marketing 2026" Report<span style="color:#666;font-size:11px;margin-left:8px">· vor 3 Tagen</span></div>
+</div>
+<div style="padding:14px 18px;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;gap:12px">
+<div style="width:8px;height:8px;border-radius:50%;background:#f59e0b;flex-shrink:0"></div>
+<div><strong style="color:#22c55e">Lindy AI</strong> senkt Pro-Preis auf $49.99/Monat (vorher $59.99)<span style="color:#666;font-size:11px;margin-left:8px">· vor 5 Tagen</span></div>
+</div>
+<div style="padding:14px 18px;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;gap:12px">
+<div style="width:8px;height:8px;border-radius:50%;background:#3b82f6;flex-shrink:0"></div>
+<div><strong style="color:#8b5cf6">Nunatak Group</strong> expandiert AI Lab – neues Paper zu Generative AI im Marketing<span style="color:#666;font-size:11px;margin-left:8px">· vor 1 Woche</span></div>
+</div>
+<div style="padding:14px 18px;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;gap:12px">
+<div style="width:8px;height:8px;border-radius:50%;background:#f59e0b;flex-shrink:0"></div>
+<div><strong style="color:#3b82f6">HubSpot</strong> Breeze Agents jetzt in Beta – kostenlose KI-Agents für alle HubSpot-Nutzer<span style="color:#666;font-size:11px;margin-left:8px">· vor 1 Woche</span></div>
+</div>
+<div style="padding:14px 18px;display:flex;align-items:center;gap:12px">
+<div style="width:8px;height:8px;border-radius:50%;background:#ef4444;flex-shrink:0"></div>
+<div><strong style="color:#f97316">Jasper</strong> launcht Content Pipelines – End-to-End Content Automation<span style="color:#666;font-size:11px;margin-left:8px">· vor 2 Wochen</span></div>
+</div>
+</div>
 
 <div class="section-title"><div class="dot" style="background:#f97316"></div> Competitor Profiles</div>
 <div class="grid-3">
-\${['Alpha','Beta','Gamma'].map(n=>\`<div class="card"><h3>Competitor \${n}</h3><p><strong>Positionierung:</strong> Platzhalter<br><strong>Zielgruppe:</strong> Platzhalter<br><strong>Stärken:</strong> Platzhalter<br><strong>Schwächen:</strong> Platzhalter<br><strong>Letzte Aktivität:</strong> Platzhalter</p></div>\`).join('')}
+<div class="card" style="border-top:3px solid #f97316">
+<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+<div style="width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#f97316,#ea580c);display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:16px;color:#fff">J</div>
+<div><h3 style="margin:0;font-size:15px">Jasper AI</h3><span style="font-size:11px;color:#888">jasper.ai</span></div>
+</div>
+<p style="font-size:12px;margin-bottom:8px"><strong>Positionierung:</strong> Die führende AI Marketing Plattform – "Put AI agents to work for marketing"</p>
+<p style="font-size:12px;margin-bottom:8px"><strong>Zielgruppe:</strong> Enterprise Marketing Teams, auch SMBs</p>
+<p style="font-size:12px;margin-bottom:8px"><strong>Stärken:</strong> 100+ AI Agents, Content Pipelines, Brand Voice AI, Market Leader</p>
+<p style="font-size:12px;margin-bottom:8px"><strong>Schwächen:</strong> Komplex für KMUs, teuer bei Skalierung, kein WhatsApp/Telegram</p>
+<p style="font-size:12px;margin-bottom:10px"><strong>Letzte Aktivität:</strong> "State of AI in Marketing 2026" Report, Content Pipelines Launch</p>
+<div style="display:inline-block;padding:4px 12px;border-radius:20px;background:rgba(239,68,68,0.15);color:#ef4444;font-size:11px;font-weight:600">🔴 Bedrohungslevel: Hoch</div>
+</div>
+
+<div class="card" style="border-top:3px solid #22c55e">
+<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+<div style="width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#22c55e,#16a34a);display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:16px;color:#fff">L</div>
+<div><h3 style="margin:0;font-size:15px">Lindy AI</h3><span style="font-size:11px;color:#888">lindy.ai</span></div>
+</div>
+<p style="font-size:12px;margin-bottom:8px"><strong>Positionierung:</strong> "The Ultimate AI Assistant For Work" – persönlicher KI-Assistent via iMessage/SMS</p>
+<p style="font-size:12px;margin-bottom:8px"><strong>Zielgruppe:</strong> Professionals, kleine Teams (US-fokussiert)</p>
+<p style="font-size:12px;margin-bottom:8px"><strong>Stärken:</strong> Einfache UX (texten reicht), $49.99/Mo, Personal Assistant Modell</p>
+<p style="font-size:12px;margin-bottom:8px"><strong>Schwächen:</strong> Nicht marketing-spezifisch, US-fokussiert, keine Analytics</p>
+<p style="font-size:12px;margin-bottom:10px"><strong>Letzte Aktivität:</strong> Preissenkung auf $49.99/Mo, positioniert sich gegen OpenClaw</p>
+<div style="display:inline-block;padding:4px 12px;border-radius:20px;background:rgba(245,158,11,0.15);color:#f59e0b;font-size:11px;font-weight:600">🟡 Bedrohungslevel: Mittel</div>
+</div>
+
+<div class="card" style="border-top:3px solid #8b5cf6">
+<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+<div style="width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#8b5cf6,#7c3aed);display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:16px;color:#fff">N</div>
+<div><h3 style="margin:0;font-size:15px">EMMA / Nunatak Group</h3><span style="font-size:11px;color:#888">nunatak.com</span></div>
+</div>
+<p style="font-size:12px;margin-bottom:8px"><strong>Positionierung:</strong> Strategy Consultancy für Digital Transformation – AI Lab für CMOs & Marketing Leaders</p>
+<p style="font-size:12px;margin-bottom:8px"><strong>Zielgruppe:</strong> Große Unternehmen, CMOs, CCOs</p>
+<p style="font-size:12px;margin-bottom:8px"><strong>Stärken:</strong> Tiefe Strategie-Expertise, Consulting + Implementation, München-basiert</p>
+<p style="font-size:12px;margin-bottom:8px"><strong>Schwächen:</strong> Teures Consulting-Modell, kein Self-Service, kein KMU-Produkt</p>
+<p style="font-size:12px;margin-bottom:10px"><strong>Letzte Aktivität:</strong> AI Lab Expansion, neues Paper zu Generative AI im Marketing</p>
+<div style="display:inline-block;padding:4px 12px;border-radius:20px;background:rgba(59,130,246,0.15);color:#3b82f6;font-size:11px;font-weight:600">🔵 Bedrohungslevel: Niedrig</div>
+</div>
 </div>
 
 <div class="section-title"><div class="dot" style="background:#f97316"></div> Trend Radar</div>
-\${card('Markttrends & Keywords','Aktuelle Branchentrends, aufsteigende Keywords und relevante News. Daten werden laufend aktualisiert.')}
+<div class="card" style="border-left:3px solid #f97316">
+<div style="display:flex;flex-direction:column;gap:10px">
+<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:rgba(239,68,68,0.08);border-radius:8px">
+<span style="font-size:13px">🤖 AI Agents werden zum Standard in Marketing-Teams</span>
+<span style="padding:3px 10px;border-radius:12px;background:rgba(239,68,68,0.15);color:#ef4444;font-size:11px;font-weight:600">Hoch</span>
+</div>
+<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:rgba(239,68,68,0.08);border-radius:8px">
+<span style="font-size:13px">💬 Conversational AI Assistants (WhatsApp/SMS) wachsen stark</span>
+<span style="padding:3px 10px;border-radius:12px;background:rgba(239,68,68,0.15);color:#ef4444;font-size:11px;font-weight:600">Hoch</span>
+</div>
+<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:rgba(245,158,11,0.08);border-radius:8px">
+<span style="font-size:13px">⚡ Content-Automatisierung ersetzt manuelle Workflows</span>
+<span style="padding:3px 10px;border-radius:12px;background:rgba(245,158,11,0.15);color:#f59e0b;font-size:11px;font-weight:600">Mittel</span>
+</div>
+<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:rgba(239,68,68,0.08);border-radius:8px">
+<span style="font-size:13px">📈 KMU-Markt für AI-Tools wächst 40%+ YoY</span>
+<span style="padding:3px 10px;border-radius:12px;background:rgba(239,68,68,0.15);color:#ef4444;font-size:11px;font-weight:600">Hoch</span>
+</div>
+<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:rgba(245,158,11,0.08);border-radius:8px">
+<span style="font-size:13px">🎯 Brand Voice & Personalisierung als Differentiator</span>
+<span style="padding:3px 10px;border-radius:12px;background:rgba(245,158,11,0.15);color:#f59e0b;font-size:11px;font-weight:600">Mittel</span>
+</div>
+</div>
+</div>
 
 <div class="section-title"><div class="dot" style="background:#f97316"></div> Battlecards</div>
-\${card('Battlecards','Vergleichskarten für Vertriebsgespräche: Feature-Vergleich, Preisvergleich, Messaging-Empfehlungen pro Wettbewerber.')}
+<div class="card" style="overflow-x:auto">
+<table style="width:100%;border-collapse:collapse;font-size:12px;min-width:600px">
+<thead>
+<tr style="border-bottom:2px solid #f97316">
+<th style="text-align:left;padding:10px 8px;color:#f97316">Kriterium</th>
+<th style="text-align:center;padding:10px 8px;color:#f97316">Agents2Go</th>
+<th style="text-align:center;padding:10px 8px">Jasper AI</th>
+<th style="text-align:center;padding:10px 8px">Lindy AI</th>
+<th style="text-align:center;padding:10px 8px">EMMA/Nunatak</th>
+</tr>
+</thead>
+<tbody>
+<tr style="border-bottom:1px solid rgba(255,255,255,0.06)"><td style="padding:8px">Zielgruppe</td><td style="text-align:center;padding:8px;color:#f97316;font-weight:600">KMUs</td><td style="text-align:center;padding:8px">Enterprise + SMB</td><td style="text-align:center;padding:8px">Professionals</td><td style="text-align:center;padding:8px">Enterprise</td></tr>
+<tr style="border-bottom:1px solid rgba(255,255,255,0.06)"><td style="padding:8px">Preismodell</td><td style="text-align:center;padding:8px;color:#f97316;font-weight:600">Agent-basiert</td><td style="text-align:center;padding:8px">Abo (Creator–Enterprise)</td><td style="text-align:center;padding:8px">$49.99/Mo</td><td style="text-align:center;padding:8px">Consulting-Fee</td></tr>
+<tr style="border-bottom:1px solid rgba(255,255,255,0.06)"><td style="padding:8px">WhatsApp/Telegram/SMS</td><td style="text-align:center;padding:8px;color:#22c55e">✅ Ja</td><td style="text-align:center;padding:8px;color:#ef4444">❌ Nein</td><td style="text-align:center;padding:8px;color:#f59e0b">📱 iMessage/SMS</td><td style="text-align:center;padding:8px;color:#ef4444">❌ Nein</td></tr>
+<tr style="border-bottom:1px solid rgba(255,255,255,0.06)"><td style="padding:8px">Marketing-Fokus</td><td style="text-align:center;padding:8px;color:#22c55e">✅ Voll</td><td style="text-align:center;padding:8px;color:#22c55e">✅ Voll</td><td style="text-align:center;padding:8px;color:#ef4444">❌ Generalist</td><td style="text-align:center;padding:8px;color:#22c55e">✅ Strategie</td></tr>
+<tr style="border-bottom:1px solid rgba(255,255,255,0.06)"><td style="padding:8px">Setup-Aufwand</td><td style="text-align:center;padding:8px;color:#22c55e">⚡ Minimal</td><td style="text-align:center;padding:8px;color:#f59e0b">🔧 Mittel</td><td style="text-align:center;padding:8px;color:#22c55e">⚡ Minimal</td><td style="text-align:center;padding:8px;color:#ef4444">🏗️ Hoch</td></tr>
+<tr style="border-bottom:1px solid rgba(255,255,255,0.06)"><td style="padding:8px">Persönlicher Assistent</td><td style="text-align:center;padding:8px;color:#22c55e">✅ Ja</td><td style="text-align:center;padding:8px;color:#ef4444">❌ Nein</td><td style="text-align:center;padding:8px;color:#22c55e">✅ Ja</td><td style="text-align:center;padding:8px;color:#ef4444">❌ Nein</td></tr>
+<tr style="border-bottom:1px solid rgba(255,255,255,0.06)"><td style="padding:8px">KMU-tauglich</td><td style="text-align:center;padding:8px;color:#22c55e">✅ Ja</td><td style="text-align:center;padding:8px;color:#f59e0b">⚠️ Bedingt</td><td style="text-align:center;padding:8px;color:#22c55e">✅ Ja</td><td style="text-align:center;padding:8px;color:#ef4444">❌ Nein</td></tr>
+<tr><td style="padding:8px">Sprache DE</td><td style="text-align:center;padding:8px;color:#22c55e">✅ Nativ</td><td style="text-align:center;padding:8px;color:#f59e0b">🌍 Multi (EN-first)</td><td style="text-align:center;padding:8px;color:#ef4444">❌ EN only</td><td style="text-align:center;padding:8px;color:#22c55e">✅ DE</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="section-title"><div class="dot" style="background:#f97316"></div> Marketing Budget Übersicht</div>
+<div class="card" style="border-left:3px solid #f97316">
+<p style="font-size:12px;color:#888;margin-bottom:12px">💡 Inspiriert von EMMA/Nunatak Cost Analysis – Marketing-Spend auf einen Blick</p>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px">
+<div style="padding:14px;background:rgba(249,115,22,0.08);border-radius:8px;text-align:center">
+<div style="font-size:11px;color:#888">Ads Budget</div>
+<div style="font-size:20px;font-weight:700;color:#f97316;margin-top:4px">€2.400</div>
+<div style="font-size:10px;color:#22c55e">↗ +12% vs. Vormonat</div>
+</div>
+<div style="padding:14px;background:rgba(139,92,246,0.08);border-radius:8px;text-align:center">
+<div style="font-size:11px;color:#888">Content & Tools</div>
+<div style="font-size:20px;font-weight:700;color:#8b5cf6;margin-top:4px">€890</div>
+<div style="font-size:10px;color:#888">→ stabil</div>
+</div>
+<div style="padding:14px;background:rgba(34,197,94,0.08);border-radius:8px;text-align:center">
+<div style="font-size:11px;color:#888">Freelancer</div>
+<div style="font-size:20px;font-weight:700;color:#22c55e;margin-top:4px">€1.200</div>
+<div style="font-size:10px;color:#ef4444">↘ -8% vs. Vormonat</div>
+</div>
+<div style="padding:14px;background:rgba(59,130,246,0.08);border-radius:8px;text-align:center">
+<div style="font-size:11px;color:#888">Gesamt / Monat</div>
+<div style="font-size:20px;font-weight:700;color:#3b82f6;margin-top:4px">€4.490</div>
+<div style="font-size:10px;color:#888">Budget: €5.000</div>
+</div>
+</div>
+</div>
+
+</div><!-- end mkt-a2g -->
 </div>\`;
 
 // PERFORMANCE
