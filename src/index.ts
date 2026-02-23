@@ -4,7 +4,7 @@ export default {
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Marketing Dashboard</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -15,22 +15,33 @@ export default {
 --shadow:0 2px 8px rgba(0,0,0,.08);
 --radius:10px;
 --font:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',Roboto,sans-serif;
+--topbar-h:0px;
 }
-body{font-family:var(--font);background:var(--bg);color:#1a1a2e;display:flex;min-height:100vh}
+html{overflow-x:hidden}
+body{font-family:var(--font);background:var(--bg);color:#1a1a2e;display:flex;min-height:100vh;overflow-x:hidden}
+
+/* Mobile top bar */
+.mobile-topbar{display:none;position:fixed;top:0;left:0;right:0;height:56px;background:#111118;color:#fff;z-index:200;align-items:center;padding:0 16px;gap:12px}
+.hamburger{background:none;border:none;color:#fff;font-size:28px;cursor:pointer;width:44px;height:44px;display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent}
+.mobile-topbar .logo{font-size:18px;font-weight:700;letter-spacing:-.5px}
+.mobile-topbar .logo span{color:#4a8cff}
+
+/* Sidebar overlay backdrop */
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:149;-webkit-tap-highlight-color:transparent}
 
 /* Sidebar */
-.sidebar{width:var(--sidebar-w);min-height:100vh;background:#111118;color:#fff;position:fixed;top:0;left:0;bottom:0;overflow-y:auto;z-index:100;display:flex;flex-direction:column}
+.sidebar{width:var(--sidebar-w);min-height:100vh;background:#111118;color:#fff;position:fixed;top:0;left:0;bottom:0;overflow-y:auto;z-index:150;display:flex;flex-direction:column;transition:transform .3s ease}
 .sidebar-logo{padding:24px 20px 16px;font-size:20px;font-weight:700;letter-spacing:-.5px;border-bottom:1px solid #222}
 .sidebar-logo span{color:#4a8cff}
 .sidebar nav{flex:1;padding:8px 0}
-.nav-item{display:flex;align-items:center;gap:10px;padding:11px 20px;cursor:pointer;font-size:13.5px;color:#8a8a9a;transition:all .15s;border-left:3px solid transparent;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nav-item{display:flex;align-items:center;gap:10px;padding:11px 20px;cursor:pointer;font-size:13.5px;color:#8a8a9a;transition:all .15s;border-left:3px solid transparent;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;-webkit-tap-highlight-color:transparent}
 .nav-item:hover{background:#1a1a28;color:#ccc}
 .nav-item.active{color:#fff;background:#1a1a28}
 .nav-item .emoji{font-size:16px;flex-shrink:0}
 .nav-sep{height:1px;background:#222;margin:8px 16px}
 
 /* Main */
-.main{margin-left:var(--sidebar-w);flex:1;padding:28px 32px;min-height:100vh}
+.main{margin-left:var(--sidebar-w);flex:1;padding:28px 32px;min-height:100vh;max-width:100%}
 .page{display:none}
 .page.active{display:block}
 .page-header{margin-bottom:24px}
@@ -65,7 +76,7 @@ body{font-family:var(--font);background:var(--bg);color:#1a1a2e;display:flex;min
 .section-title{font-size:17px;font-weight:700;margin:24px 0 12px;display:flex;align-items:center;gap:8px}
 .section-title .dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
 
-/* Action Cards - THE star */
+/* Action Cards */
 .action-card{background:#fff;border-radius:12px;padding:22px;box-shadow:0 3px 16px rgba(0,0,0,.1);border-left:4px solid #4a8cff;margin-bottom:16px;transition:transform .1s}
 .action-card:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(0,0,0,.12)}
 .action-card .ac-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px}
@@ -74,8 +85,8 @@ body{font-family:var(--font);background:var(--bg);color:#1a1a2e;display:flex;min
 .action-card .ac-meta span{display:flex;align-items:center;gap:4px}
 .action-card .ac-desc{font-size:13px;color:#555;line-height:1.5;margin-bottom:6px}
 .action-card .ac-rec{font-size:13px;color:#4a8cff;font-weight:600;margin-bottom:14px}
-.action-card .ac-actions{display:flex;gap:8px}
-.btn{padding:8px 18px;border-radius:8px;border:none;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s}
+.action-card .ac-actions{display:flex;gap:8px;flex-wrap:wrap}
+.btn{padding:8px 18px;border-radius:8px;border:none;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s;min-height:44px;display:inline-flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent}
 .btn:hover{filter:brightness(1.1)}
 .btn-approve{background:#22c55e;color:#fff}
 .btn-edit{background:#3b82f6;color:#fff}
@@ -101,12 +112,13 @@ body{font-family:var(--font);background:var(--bg);color:#1a1a2e;display:flex;min
 .change-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
 
 /* Tabs */
-.tabs{display:flex;gap:0;margin-bottom:20px;border-bottom:2px solid #e5e7eb}
-.tab{padding:10px 20px;font-size:13px;font-weight:600;cursor:pointer;color:#888;border-bottom:2px solid transparent;margin-bottom:-2px;transition:.15s}
+.tabs{display:flex;gap:0;margin-bottom:20px;border-bottom:2px solid #e5e7eb;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{padding:10px 20px;font-size:13px;font-weight:600;cursor:pointer;color:#888;border-bottom:2px solid transparent;margin-bottom:-2px;transition:.15s;white-space:nowrap;flex-shrink:0;min-height:44px;display:flex;align-items:center;-webkit-tap-highlight-color:transparent}
 .tab.active{color:#1a1a2e;border-bottom-color:currentColor}
 
 /* Pipeline */
-.pipeline{display:flex;gap:12px;overflow-x:auto;padding-bottom:8px}
+.pipeline{display:flex;gap:12px;overflow-x:auto;padding-bottom:8px;-webkit-overflow-scrolling:touch}
 .pipeline-stage{min-width:180px;flex:1;background:#f8f9fb;border-radius:10px;padding:14px}
 .pipeline-stage h4{font-size:13px;font-weight:700;margin-bottom:10px;text-align:center}
 .pipeline-card{background:#fff;border-radius:8px;padding:12px;margin-bottom:8px;box-shadow:0 1px 4px rgba(0,0,0,.06);font-size:12px}
@@ -146,15 +158,105 @@ body{font-family:var(--font);background:var(--bg);color:#1a1a2e;display:flex;min
 
 .accent-bar{height:4px;border-radius:2px;margin-bottom:20px}
 
-/* Responsive */
-@media(max-width:1200px){.grid-6{grid-template-columns:repeat(3,1fr)}.grid-4{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:900px){.grid-3{grid-template-columns:1fr 1fr}.grid-2{grid-template-columns:1fr}.kanban{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:768px){.sidebar{width:60px}.sidebar .nav-label,.sidebar-logo span,.sidebar-logo em{display:none}.sidebar .nav-item{justify-content:center;padding:14px 0}.main{margin-left:60px;padding:20px 16px}.grid-6{grid-template-columns:repeat(2,1fr)}.pipeline{flex-direction:column}}
+/* Responsive - Tablet */
+@media(max-width:1200px){
+.grid-6{grid-template-columns:repeat(3,1fr)}
+.grid-4{grid-template-columns:repeat(2,1fr)}
+}
+
+@media(max-width:900px){
+.grid-3{grid-template-columns:1fr 1fr}
+.grid-2{grid-template-columns:1fr}
+.kanban{grid-template-columns:repeat(2,1fr)}
+}
+
+/* Responsive - Mobile */
+@media(max-width:768px){
+:root{--topbar-h:56px}
+
+/* Show mobile top bar */
+.mobile-topbar{display:flex}
+
+/* Sidebar becomes overlay */
+.sidebar{transform:translateX(-100%);top:0;width:280px}
+.sidebar.open{transform:translateX(0)}
+.sidebar-overlay.open{display:block}
+
+/* Main area */
+.main{margin-left:0;padding:calc(var(--topbar-h) + 16px) 16px 16px;width:100%}
+
+/* KPI grid: 2 columns */
+.grid-6{grid-template-columns:1fr 1fr;gap:8px}
+
+/* All grids single column */
+.grid-2,.grid-3,.grid-4{grid-template-columns:1fr;gap:12px}
+
+/* KPI smaller padding */
+.kpi{padding:14px 10px}
+.kpi .value{font-size:24px}
+
+/* Page header */
+.page-header h1{font-size:22px}
+
+/* Action cards */
+.action-card{padding:16px;border-radius:10px}
+.action-card .ac-title{font-size:15px}
+.action-card .ac-actions{flex-direction:column}
+.action-card .ac-actions .btn{width:100%}
+
+/* Quick actions stack */
+.quick-actions{flex-direction:column}
+.quick-actions .btn{width:100%}
+
+/* Pipeline horizontal scroll */
+.pipeline{flex-direction:row;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;padding-bottom:12px}
+.pipeline-stage{min-width:240px;flex:none;scroll-snap-align:start}
+
+/* Kanban single column */
+.kanban{grid-template-columns:1fr}
+
+/* Cards smaller padding */
+.card{padding:16px}
+
+/* Alerts */
+.alert-item{font-size:12px;padding:10px 12px;gap:8px}
+
+/* Buttons min touch target */
+.btn{min-height:44px;font-size:14px}
+
+/* Diff view stack */
+.diff-grid{grid-template-columns:1fr !important}
+
+/* Section title */
+.section-title{font-size:16px;margin:20px 0 10px}
+
+/* Nav items touch targets */
+.nav-item{padding:14px 20px;font-size:15px;min-height:48px}
+
+/* Hide hover effects on touch */
+.action-card:hover{transform:none}
+}
+
+/* Extra small phones */
+@media(max-width:380px){
+.grid-6{grid-template-columns:1fr 1fr;gap:6px}
+.kpi .value{font-size:20px}
+.main{padding:calc(var(--topbar-h) + 12px) 12px 12px}
+}
 </style>
 </head>
 <body>
 
-<aside class="sidebar">
+<!-- Mobile top bar -->
+<div class="mobile-topbar">
+<button class="hamburger" id="hamburger-btn" aria-label="Menu">☰</button>
+<div class="logo">📈 <span>marketing</span>HUB</div>
+</div>
+
+<!-- Sidebar overlay backdrop -->
+<div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+<aside class="sidebar" id="sidebar">
 <div class="sidebar-logo">📈 <span>marketing</span><em style="font-style:normal;color:#fff">HUB</em></div>
 <nav id="nav"></nav>
 </aside>
@@ -180,6 +282,17 @@ const pages = [
 
 const accentColors={blue:'#4a8cff',orange:'#f97316',green:'#22c55e',violet:'#8b5cf6',pink:'#ec4899',cyan:'#06b6d4',teal:'#14b8a6',yellow:'#eab308',darkblue:'#1e40af',lime:'#84cc16',red:'#ef4444',grey:'#6b7280',slate:'#64748b'};
 
+// Mobile menu toggle
+const sidebar=document.getElementById('sidebar');
+const overlay=document.getElementById('sidebar-overlay');
+const hamburger=document.getElementById('hamburger-btn');
+
+function openSidebar(){sidebar.classList.add('open');overlay.classList.add('open');document.body.style.overflow='hidden'}
+function closeSidebar(){sidebar.classList.remove('open');overlay.classList.remove('open');document.body.style.overflow=''}
+
+hamburger.addEventListener('click',()=>{sidebar.classList.contains('open')?closeSidebar():openSidebar()});
+overlay.addEventListener('click',closeSidebar);
+
 // Build nav
 const nav=document.getElementById('nav');
 pages.forEach((p,i)=>{
@@ -196,6 +309,8 @@ const pg=pages.find(p=>p.id===id);
 ni.classList.add('active');
 ni.style.borderLeftColor=accentColors[pg.accent];
 ni.style.color='#fff';
+closeSidebar();
+window.scrollTo(0,0);
 }
 document.querySelectorAll('.nav-item').forEach(n=>n.addEventListener('click',()=>switchPage(n.dataset.page)));
 
@@ -352,7 +467,7 @@ main.innerHTML+=\`<div class="page" id="page-website" data-accent="teal">
 \${card('Landing Pages','Übersicht aller Landing Pages mit Performance-Daten und Optimierungsvorschlägen.')}
 \${card('Experimente','Laufende A/B-Tests auf der Website mit Ergebnissen und statistischer Signifikanz.')}
 </div>
-<div class="card"><h3>Diff-View: Vorher / Nachher</h3><div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:12px">
+<div class="card"><h3>Diff-View: Vorher / Nachher</h3><div class="diff-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:12px">
 <div style="background:#fef2f2;padding:14px;border-radius:8px;font-size:13px"><strong>Vorher:</strong><br><del>Jetzt kaufen und sparen</del></div>
 <div style="background:#f0fdf4;padding:14px;border-radius:8px;font-size:13px"><strong>Nachher:</strong><br><ins>Heute bestellen – kostenloser Versand bis Freitag</ins></div>
 </div></div>
